@@ -1,16 +1,14 @@
-# Stage 1: Build the JAR using Gradle
-FROM eclipse-temurin:17-jdk-alpine AS build
+# Stage 1: Build JAR
+FROM maven:3.9-eclipse-temurin-17 AS builder
 WORKDIR /app
-COPY . .
-RUN chmod +x ./gradlew && ./gradlew bootJar -x test
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Stage 2: Run the JAR
-FROM eclipse-temurin:17-jre-alpine
+# Stage 2: Run Application
+FROM eclipse-temurin:17-jre
 WORKDIR /app
-COPY --from=build /app/build/libs/*.jar app.jar
-
-# Render assigns a dynamic port via $PORT
-ENV PORT=10000
-EXPOSE 10000
-
-CMD ["sh", "-c", "java -Xmx350m -Xms256m -Dserver.port=${PORT} -jar app.jar"]
+COPY --from=builder /app/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
