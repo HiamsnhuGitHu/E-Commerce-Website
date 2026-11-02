@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed - ShopHere</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/products.js"></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/auth.js" defer></script>
+</head>
+<body>
+
+  <!-- Top Luxury Announcement Bar -->
+  <div class="top-announcement-bar">
+    <div class="announcement-content">
+      <span class="announcement-pill">LUXURY FEST</span>
+      <span>Flat <strong>20% OFF</strong> on First Purchase with code <strong>LUXE20</strong> &bull; Free Express Delivery &bull; 100% Brand Certified</span>
+    </div>
+  </div>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="products.html" class="brand-logo">
+        <span class="logo-badge">SH</span>
+        <span class="logo-text">ShopHere</span>
+      </a>
+
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <svg class="search-icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="search" id="header-search" placeholder="Search shoes, t-shirts, phones, laptops, audio..." autocomplete="off">
+      </div>
+
+      <!-- Header Actions -->
+      <nav class="header-nav">
+        <button type="button" id="header-account-btn" class="nav-item account-trigger" onclick="openAccountModal()">
+          <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> 
+          <span id="account-btn-label">My Account</span>
+        </button>
+
+        <a href="orders.html" class="nav-item orders-nav-item" title="View All Orders">
+          <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> 
+          <span>All Orders</span>
+        </a>
+
+        <a href="wishlist.html" class="nav-item wishlist-nav-item">
+          <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg> 
+          <span>Wishlist</span>
+          <span id="wishlist-count" class="cart-count wishlist-count">0</span>
+        </a>
+
+        <a href="cart.html" class="nav-item cart-nav-item">
+          <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> 
+          <span>Cart</span>
+          <span id="cart-count" class="cart-count">0</span>
+        </a>
+
+        <button type="button" id="header-signout-btn" class="nav-item signout-nav-item" onclick="handleSignOut()" title="Sign Out of ShopHere">
+          <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> 
+          <span>Sign Out</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Success Main Card -->
+  <main class="main-content">
+    <div class="order-success-card" style="max-width: 860px; padding: 36px 30px;">
+      <div class="success-badge-circle" style="width: 64px; height: 64px; font-size: 2.2rem; margin-bottom: 14px;">✓</div>
+      <h1 class="success-title" style="font-size: 1.8rem; margin-bottom: 6px;">Order Confirmed!</h1>
+      <p class="success-subtitle" style="margin-bottom: 22px;">Thank you for your purchase. Your payment has been verified and your shipment is being processed.</p>
+
+      <!-- Flipkart Style Live Order Tracking Card with the Iconic Green Line -->
+      <div class="flipkart-tracker-card">
+        <div class="tracker-header-box">
+          <div>
+            <span class="tracker-id-pill" id="tracker-order-id">#ORD-2026-9843</span>
+            <span style="font-size:0.84rem; color:#64748b; margin-left:8px;">Placed on <strong id="tracker-placed-time" style="color:#0f172a;">Today, 8:25 AM</strong></span>
+          </div>
+          <div class="tracker-courier-tag">
+            <svg class="nav-icon-svg" viewBox="0 0 24 24" style="color:#16a34a; width:17px; height:17px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            Courier: <strong id="tracker-courier-name">Ekart Logistics</strong> (<span id="tracker-tracking-no">#EKT-8492049</span>)
+          </div>
+        </div>
+
+        <!-- The Horizontal Stepper with the Iconic Flipkart Green Progress Line -->
+        <div class="tracker-stepper-wrap">
+          <div class="tracker-rail"></div>
+          <!-- Animated Flipkart Green Progress Line -->
+          <div class="tracker-progress-line" id="tracker-green-line" style="width: 33%;"></div>
+
+          <div class="tracker-steps-flex">
+            <!-- Step 1: Order Confirmed (Completed) -->
+            <div class="tracker-step-item completed">
+              <div class="tracker-node"><svg viewBox="0 0 24 24" style="width:15px; height:15px; stroke:#ffffff; stroke-width:3.2; fill:none;"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+              <div class="tracker-step-title">Order Confirmed</div>
+              <div class="tracker-step-date" id="step-confirmed-date">Today, 8:25 AM</div>
+            </div>
+
+            <!-- Step 2: Shipped (Active / In-transit) -->
+            <div class="tracker-step-item active">
+              <div class="tracker-node">
+                <span class="tracker-node-dot"></span>
+              </div>
+              <div class="tracker-step-title">Shipped</div>
+              <div class="tracker-step-date">Expected Tomorrow</div>
+            </div>
+
+            <!-- Step 3: Out for Delivery (Upcoming) -->
+            <div class="tracker-step-item">
+              <div class="tracker-node">
+                <svg class="nav-icon-svg" viewBox="0 0 24 24" style="width:14px; height:14px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+              </div>
+              <div class="tracker-step-title">Out for Delivery</div>
+              <div class="tracker-step-date" id="step-ofd-date">Expected Sat, 31 Oct</div>
+            </div>
+
+            <!-- Step 4: Delivered (Upcoming) -->
+            <div class="tracker-step-item">
+              <div class="tracker-node">
+                <svg class="nav-icon-svg" viewBox="0 0 24 24" style="width:14px; height:14px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div class="tracker-step-title">Delivered</div>
+              <div class="tracker-step-date" id="step-delivered-date">Sun, 1 Nov by 8 PM</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flipkart Real-Time Milestone Activity Log -->
+        <div class="tracker-logs-card">
+          <div class="tracker-logs-title">
+            <svg class="nav-icon-svg" viewBox="0 0 24 24" style="color:#16a34a; width:16px; height:16px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Live Tracking Milestones &amp; Activity
+          </div>
+          <ul class="tracker-log-list">
+            <li class="tracker-log-row">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time" id="log-time-1">Today &bull; 8:25 AM</span>
+              <span class="tracker-log-desc">Order placed &amp; verified. Payment confirmed via <strong id="log-payment-method">UPI (Verified)</strong>.</span>
+            </li>
+            <li class="tracker-log-row">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time" id="log-time-2">Today &bull; 8:28 AM</span>
+              <span class="tracker-log-desc">Seller has acknowledged the order and is preparing packaging at primary warehouse.</span>
+            </li>
+            <li class="tracker-log-row upcoming">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time">Expected Tomorrow</span>
+              <span class="tracker-log-desc">Item will be picked up by <strong>Ekart Logistics</strong> logistics courier hub.</span>
+            </li>
+            <li class="tracker-log-row upcoming">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time" id="log-ofd-expected">Expected Sunday, Nov 01</span>
+              <span class="tracker-log-desc">Out for delivery with delivery associate. Safe OTP-based doorstep delivery.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Order Summary Card -->
+      <div class="success-details-box">
+        <div class="success-row">
+          <span class="success-label">Order Reference</span>
+          <strong id="success-order-id" class="success-val">#ORD-2026-9843</strong>
+        </div>
+        <div class="success-row">
+          <span class="success-label">Items In This Order</span>
+          <span id="success-items-summary" class="success-val" style="font-weight: 600;">1 Product</span>
+        </div>
+        <div class="success-row">
+          <span class="success-label">Payment Method</span>
+          <strong id="success-payment-method" class="success-val" style="color: #2563eb;">UPI (Verified)</strong>
+        </div>
+        <div class="success-row">
+          <span class="success-label">Delivery Address</span>
+          <span id="success-address" class="success-val" style="font-weight: 500;">Flat 402, Green Valley Apartments, Outer Ring Road, Bengaluru</span>
+        </div>
+        <div class="success-row total-success-row">
+          <span class="success-label">Total Amount Paid</span>
+          <strong id="success-total" class="success-val total-amount">₹4,999</strong>
+        </div>
+      </div>
+
+      <div class="success-actions">
+        <a href="orders.html" class="btn-primary-large" style="display:inline-flex; text-decoration:none; max-width: 260px; margin: 0 auto;">
+          <svg class="nav-icon-svg" viewBox="0 0 24 24" style="margin-right:6px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> View in Order History
+        </a>
+        <a href="products.html" class="btn-secondary" style="display:inline-flex; text-decoration:none; padding: 12px 26px; border-radius: 8px;">
+          Continue Shopping
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h3>About Us</h3>
+        <p>ShopHere is India's leading modern e-commerce storefront offering curated footwear, trendsetting apparel, flagship smartphones, and elite laptops. We are committed to authentic quality, transparent pricing, and lightning-fast customer fulfillment.</p>
+      </div>
+
+      <div class="footer-col">
+        <h3>Contact Us</h3>
+        <ul class="footer-contact-list">
+          <li><strong>Email:</strong> support@shophere.com</li>
+          <li><strong>Phone:</strong> +91 98765 43210</li>
+          <li><strong>Hours:</strong> Mon – Sat: 9:00 AM – 8:00 PM</li>
+          <li><strong>Support:</strong> 24/7 Dedicated Online Helpdesk</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Address</h3>
+        <address class="footer-address">
+          ShopHere Retail Pvt. Ltd.<br>
+          Cyber Tech Park, 4th Floor, Tower B<br>
+          Outer Ring Road, Bellandur<br>
+          Bengaluru, Karnataka - 560103<br>
+          India
+        </address>
+      </div>
+
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="orders.html">All Orders</a></li>
+          <li><a href="cart.html">Shopping Cart</a></li>
+          <li><a href="wishlist.html">My Wishlist</a></li>
+          <li><a href="javascript:void(0)" class="account-trigger" onclick="openAccountModal()">My Account Profile</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Create Account</a></li>
+          <li><a href="javascript:void(0)" onclick="handleSignOut()">Sign Out</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 ShopHere E-Commerce Retail Pvt. Ltd. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramOrderId = urlParams.get('orderId');
+      const paramTotal = urlParams.get('total');
+      const paramPayment = urlParams.get('payment');
+      const paramTracking = urlParams.get('trackingId');
+
+      // Attempt to retrieve full order snapshot from localStorage
+      let latestOrder = null;
+      try {
+        latestOrder = JSON.parse(localStorage.getItem('shophere_latest_order'));
+      } catch(e) {}
+
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const fullPlacedTime = `Today, ${timeStr}`;
+
+      const orderId = latestOrder?.id || paramOrderId || `#ORD-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+      const totalAmount = latestOrder?.total || paramTotal || '₹4,999';
+      const paymentMethod = latestOrder?.paymentMethod || paramPayment || 'UPI (Verified)';
+      const courierTracking = latestOrder?.trackingId || paramTracking || `#EKT-${Math.floor(10000000 + Math.random() * 90000000)}`;
+      const itemsText = latestOrder?.items || 'Selected Product (1)';
+      const shippingAddress = latestOrder?.shippingAddress || 'Flat 402, Green Valley Apartments, Outer Ring Road, Bengaluru - 560103';
+
+      // Fill tracking header and order references
+      const trackerOrderIdEl = document.getElementById('tracker-order-id');
+      const successOrderIdEl = document.getElementById('success-order-id');
+      if (trackerOrderIdEl) trackerOrderIdEl.textContent = orderId;
+      if (successOrderIdEl) successOrderIdEl.textContent = orderId;
+
+      const placedTimeEl = document.getElementById('tracker-placed-time');
+      const stepConfirmedDateEl = document.getElementById('step-confirmed-date');
+      const logTime1 = document.getElementById('log-time-1');
+      const logTime2 = document.getElementById('log-time-2');
+      if (placedTimeEl) placedTimeEl.textContent = fullPlacedTime;
+      if (stepConfirmedDateEl) stepConfirmedDateEl.textContent = fullPlacedTime;
+      if (logTime1) logTime1.textContent = `Today • ${timeStr}`;
+      if (logTime2) logTime2.textContent = `Today • ${timeStr}`;
+
+      const trackingNoEl = document.getElementById('tracker-tracking-no');
+      if (trackingNoEl) trackingNoEl.textContent = courierTracking;
+
+      const paymentMethodEl = document.getElementById('success-payment-method');
+      const logPaymentMethodEl = document.getElementById('log-payment-method');
+      if (paymentMethodEl) paymentMethodEl.textContent = paymentMethod;
+      if (logPaymentMethodEl) logPaymentMethodEl.textContent = paymentMethod;
+
+      const itemsSummaryEl = document.getElementById('success-items-summary');
+      if (itemsSummaryEl) itemsSummaryEl.textContent = itemsText;
+
+      const totalEl = document.getElementById('success-total');
+      if (totalEl) totalEl.textContent = totalAmount;
+
+      const addressEl = document.getElementById('success-address');
+      if (addressEl) addressEl.textContent = shippingAddress;
+
+      // Animate the famous Flipkart Green Progress Line smoothly on load!
+      const greenLine = document.getElementById('tracker-green-line');
+      if (greenLine) {
+        greenLine.style.width = '0%';
+        setTimeout(() => {
+          greenLine.style.width = '33%';
+        }, 300);
+      }
+    });
+  </script>
+</body>
+</html>
+

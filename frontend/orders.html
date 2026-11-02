@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders - ShopHere</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/products.js"></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/auth.js" defer></script>
+</head>
+<body>
+
+  <!-- Top Luxury Announcement Bar -->
+  <div class="top-announcement-bar">
+    <div class="announcement-content">
+      <span class="announcement-pill">LUXURY FEST</span>
+      <span>Flat <strong>20% OFF</strong> on First Purchase with code <strong>LUXE20</strong> &bull; Free Express Delivery &bull; 100% Brand Certified</span>
+    </div>
+  </div>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="products.html" class="brand-logo">
+        <span class="logo-badge">SH</span>
+        <span class="logo-text">ShopHere</span>
+      </a>
+
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <svg class="search-icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="search" id="header-search" placeholder="Search shoes, t-shirts, phones, laptops, audio..." autocomplete="off">
+      </div>
+
+      <!-- Header Actions -->
+      <nav class="header-nav">
+        <button type="button" id="header-account-btn" class="nav-item account-trigger" onclick="openAccountModal()">
+          <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> 
+          <span id="account-btn-label">My Account</span>
+        </button>
+        <a href="orders.html" class="nav-item orders-nav-item active-nav" title="View All Orders">
+          <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> 
+          <span>All Orders</span>
+        </a>
+        <a href="wishlist.html" class="nav-item wishlist-nav-item">
+          <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg> 
+          <span>Wishlist</span>
+          <span id="wishlist-count" class="cart-count wishlist-count">0</span>
+        </a>
+        <a href="cart.html" class="nav-item cart-nav-item">
+          <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> 
+          <span>Cart</span>
+          <span id="cart-count" class="cart-count">0</span>
+        </a>
+        <button type="button" id="header-signout-btn" class="nav-item signout-nav-item" onclick="handleSignOut()" title="Sign Out of ShopHere">
+          <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> 
+          <span>Sign Out</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Orders Content -->
+  <main class="main-content">
+    <div class="section-header">
+      <h1 class="section-title">My Order History</h1>
+      <p class="section-subtitle">Track, return, or buy items again</p>
+    </div>
+
+    <div class="cart-items-wrapper" style="max-width: 900px; margin: 0 auto;">
+      <div class="cart-items-container" id="orders-dynamic-container">
+        <!-- Dynamically rendered orders go here -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Flipkart-Style Live Tracking Modal -->
+  <div id="tracking-modal" class="payment-modal-backdrop">
+    <div class="payment-modal-card tracking-modal-card">
+      <div class="payment-modal-header">
+        <div class="payment-modal-title">
+          <svg class="nav-icon-svg" viewBox="0 0 24 24" style="color:#16a34a; width:22px; height:22px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          Flipkart Live Tracking &bull; <span id="modal-track-id">#ORD-9710</span>
+        </div>
+        <button type="button" class="payment-modal-close" onclick="closeTrackingModal()" title="Close Tracking">✕</button>
+      </div>
+
+      <div class="tracker-header-box" style="margin-bottom: 20px;">
+        <div>
+          <span style="font-size:0.85rem; color:#64748b;">Carrier: <strong id="modal-track-courier" style="color:#0f172a;">Ekart Logistics</strong></span>
+          <span style="font-size:0.85rem; color:#64748b; margin-left:10px;">Waybill: <strong id="modal-track-num" style="color:#2563eb;">#EKT-984392</strong></span>
+        </div>
+        <div>
+          <span id="modal-track-status-pill" class="acc-order-status status-shipped">Out for Delivery</span>
+        </div>
+      </div>
+
+      <!-- The Horizontal Stepper with the Iconic Flipkart Green Progress Line -->
+      <div class="tracker-stepper-wrap">
+        <div class="tracker-rail"></div>
+        <div class="tracker-progress-line" id="modal-green-line" style="width: 66%;"></div>
+
+        <div class="tracker-steps-flex" id="modal-tracker-steps">
+          <!-- Steps injected via JS -->
+        </div>
+      </div>
+
+      <!-- Live Tracking Activity Logs -->
+      <div class="tracker-logs-card">
+        <div class="tracker-logs-title">
+          <svg class="nav-icon-svg" viewBox="0 0 24 24" style="color:#16a34a; width:16px; height:16px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Detailed Movement History
+        </div>
+        <ul class="tracker-log-list" id="modal-track-logs">
+          <!-- Logs injected via JS -->
+        </ul>
+      </div>
+
+      <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
+        <button type="button" class="btn-primary" style="margin-top:0; width:auto; padding:10px 24px;" onclick="closeTrackingModal()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h3>About Us</h3>
+        <p>ShopHere is India's leading modern e-commerce storefront offering curated footwear, trendsetting apparel, flagship smartphones, and elite laptops. We are committed to authentic quality, transparent pricing, and lightning-fast customer fulfillment.</p>
+      </div>
+
+      <div class="footer-col">
+        <h3>Contact Us</h3>
+        <ul class="footer-contact-list">
+          <li><strong>Email:</strong> support@shophere.com</li>
+          <li><strong>Phone:</strong> +91 98765 43210</li>
+          <li><strong>Hours:</strong> Mon – Sat: 9:00 AM – 8:00 PM</li>
+          <li><strong>Support:</strong> 24/7 Dedicated Online Helpdesk</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Address</h3>
+        <address class="footer-address">
+          ShopHere Retail Pvt. Ltd.<br>
+          Cyber Tech Park, 4th Floor, Tower B<br>
+          Outer Ring Road, Bellandur<br>
+          Bengaluru, Karnataka - 560103<br>
+          India
+        </address>
+      </div>
+
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="orders.html">All Orders</a></li>
+          <li><a href="cart.html">Shopping Cart</a></li>
+          <li><a href="javascript:void(0)" class="account-trigger" onclick="openAccountModal()">My Account Profile</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Create Account</a></li>
+          <li><a href="javascript:void(0)" onclick="handleSignOut()">Sign Out</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 ShopHere E-Commerce Retail Pvt. Ltd. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const defaultOrders = [
+      {
+        id: "#ORD-9842",
+        date: "Oct 24, 2026",
+        status: "Delivered on Oct 26",
+        statusType: "delivered",
+        statusColor: "status-delivered",
+        total: "₹4,999",
+        itemsText: "Nike Air Zoom Pegasus (Size: UK 9)",
+        image: "images/products/product-1.jpg",
+        name: "Nike Air Zoom Pegasus",
+        productId: 1,
+        variantInfo: "Category: Shoes • Size: UK 9 • Qty: 1",
+        courier: "Ekart Logistics",
+        trackingId: "#EKT-3829482",
+        progressPct: 100
+      },
+      {
+        id: "#ORD-9710",
+        date: "Oct 12, 2026",
+        status: "Out for Delivery",
+        statusType: "ofd",
+        statusColor: "status-shipped",
+        total: "₹26,990",
+        itemsText: "Sony WH-1000XM5 ANC Headphones",
+        image: "images/products/product-17.jpg",
+        name: "Sony WH-1000XM5 ANC Headphones",
+        productId: 17,
+        variantInfo: "Category: Accessories • Color: Midnight Black • Qty: 1",
+        courier: "Ekart Logistics",
+        trackingId: "#EKT-984392",
+        progressPct: 66
+      }
+    ];
+
+    let allOrdersList = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAndRenderOrders();
+    });
+
+    function loadAndRenderOrders() {
+      const container = document.getElementById('orders-dynamic-container');
+      if (!container) return;
+
+      // Check localStorage for newly placed orders
+      let savedOrders = [];
+      try {
+        const stored = localStorage.getItem('shophere_all_orders');
+        if (stored) savedOrders = JSON.parse(stored);
+      } catch(e) {}
+
+      // Combine user orders with defaults
+      const combined = [...savedOrders];
+      defaultOrders.forEach(d => {
+        if (!combined.some(o => o.id === d.id)) {
+          combined.push(d);
+        }
+      });
+
+      allOrdersList = combined;
+
+      if (combined.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center; padding:50px 20px; background:#ffffff; border-radius:18px; border:1px solid #e2e8f0;">
+            <svg class="empty-icon-svg" viewBox="0 0 24 24" style="color:#64748b; margin-bottom:12px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            <h3 style="color:#0f172a; margin-bottom:6px;">No Orders Found</h3>
+            <p style="color:#64748b; font-size:0.9rem;">You haven't placed any orders yet.</p>
+            <a href="products.html" class="btn-hero-primary" style="display:inline-block; margin-top:16px;">Start Shopping</a>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = '';
+      combined.forEach((order, index) => {
+        const firstItem = order.cartSnapshot && order.cartSnapshot.length > 0
+          ? order.cartSnapshot[0]
+          : null;
+
+        const imgSrc = firstItem ? (firstItem.image || 'images/products/product-1.jpg') : (order.image || 'images/products/product-1.jpg');
+        const prodName = firstItem ? firstItem.name : (order.name || order.items || 'ShopHere Product');
+        const prodId = firstItem ? firstItem.id : (order.productId || 1);
+        const variantDesc = firstItem 
+          ? `Category: ${firstItem.category || 'Retail'}${firstItem.variant ? ' • ' + firstItem.variant : ''} • Qty: ${firstItem.quantity || 1}`
+          : (order.variantInfo || order.items || 'Standard Packaging');
+
+        const statusClass = order.statusColor || (order.status?.toLowerCase().includes('delivered') ? 'status-delivered' : 'status-shipped');
+        const progressWidth = order.progressPct || (order.status?.toLowerCase().includes('delivered') ? 100 : 33);
+
+        const card = document.createElement('div');
+        card.className = 'cart-item-row';
+        card.style.cssText = 'flex-direction: column; align-items: stretch; gap: 16px; padding: 24px; background: #ffffff; border-radius: 18px; border: 1px solid #e2e8f0; margin-bottom: 20px; box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);';
+
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <strong style="color: #0f172a; font-size: 1.05rem;">Order ${order.id}</strong>
+              <span style="color: #64748b; font-size: 0.85rem; margin-left: 10px;">Placed on ${order.date}</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:0.88rem; font-weight:800; color:#0f172a;">${order.total}</span>
+              <span class="acc-order-status ${statusClass}">${order.status}</span>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
+            <div class="cart-item-visual" style="width: 80px; height: 80px; border-radius: 12px; overflow: hidden; background: #f8fafc; border: 1px solid #e2e8f0;">
+              <img src="${imgSrc}" alt="${prodName}" class="cart-real-img" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div style="flex: 1; min-width: 220px;">
+              <h4 class="cart-item-title"><a href="product-details.html?id=${prodId}">${prodName}</a></h4>
+              <p style="font-size: 0.85rem; color: #64748b; margin-top: 2px;">${variantDesc}</p>
+              <p style="font-size: 0.8rem; color: #16a34a; font-weight: 700; margin-top: 4px;">Delivery by ${order.courier || 'Ekart Logistics'} &bull; ${order.trackingId || '#EKT-8492049'}</p>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <button type="button" class="btn-orders-cta" style="width:auto; padding:8px 16px; font-size:0.85rem;" onclick="openTrackingModal('${order.id}')">
+                <svg class="nav-icon-svg" viewBox="0 0 24 24" style="color:#16a34a; width:15px; height:15px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                Track Package
+              </button>
+              <a href="product-details.html?id=${prodId}" class="btn-hero-secondary" style="color: #0f172a; border-color: #cbd5e1; padding: 8px 16px; font-size: 0.85rem;">Buy Again</a>
+            </div>
+          </div>
+
+          <!-- Flipkart Mini Progress Line Preview -->
+          <div style="background: #f8fafc; border: 1px solid #f1f5f9; border-radius: 12px; padding: 12px 16px; margin-top: 4px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.76rem; font-weight: 700; color: #64748b; margin-bottom: 8px;">
+              <span style="color:#16a34a;">Order Confirmed</span>
+              <span style="${progressWidth >= 33 ? 'color:#16a34a;' : ''}">Shipped</span>
+              <span style="${progressWidth >= 66 ? 'color:#16a34a;' : ''}">Out for Delivery</span>
+              <span style="${progressWidth >= 100 ? 'color:#16a34a;' : ''}">Delivered</span>
+            </div>
+            <div style="position: relative; height: 5px; background: #e2e8f0; border-radius: 9999px; overflow: hidden;">
+              <div style="position: absolute; top:0; left:0; height:100%; width: ${progressWidth}%; background: linear-gradient(90deg, #16a34a, #22c55e); border-radius: 9999px; box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);"></div>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function openTrackingModal(orderId) {
+      const order = allOrdersList.find(o => o.id === orderId) || allOrdersList[0];
+      if (!order) return;
+
+      const modal = document.getElementById('tracking-modal');
+      const idEl = document.getElementById('modal-track-id');
+      const courierEl = document.getElementById('modal-track-courier');
+      const numEl = document.getElementById('modal-track-num');
+      const pillEl = document.getElementById('modal-track-status-pill');
+      const greenLine = document.getElementById('modal-green-line');
+      const stepsContainer = document.getElementById('modal-tracker-steps');
+      const logsContainer = document.getElementById('modal-track-logs');
+
+      if (idEl) idEl.textContent = order.id;
+      if (courierEl) courierEl.textContent = order.courier || 'Ekart Logistics';
+      if (numEl) numEl.textContent = order.trackingId || '#EKT-984392';
+      if (pillEl) {
+        pillEl.textContent = order.status;
+        pillEl.className = `acc-order-status ${order.statusColor || 'status-shipped'}`;
+      }
+
+      const isDelivered = order.status?.toLowerCase().includes('delivered');
+      const isOFD = order.status?.toLowerCase().includes('out for delivery') || order.statusType === 'ofd';
+      const progressWidth = isDelivered ? '100%' : isOFD ? '66%' : '33%';
+
+      // Configure Flipkart Steps based on order stage
+      const checkSvg = '<svg viewBox="0 0 24 24" style="width:14px; height:14px; stroke:#ffffff; stroke-width:3.2; fill:none;"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+      if (stepsContainer) {
+        if (isDelivered) {
+          stepsContainer.innerHTML = `
+            <div class="tracker-step-item completed">
+              <div class="tracker-node">${checkSvg}</div>
+              <div class="tracker-step-title">Order Confirmed</div>
+              <div class="tracker-step-date">${order.date}</div>
+            </div>
+            <div class="tracker-step-item completed">
+              <div class="tracker-node">${checkSvg}</div>
+              <div class="tracker-step-title">Shipped</div>
+              <div class="tracker-step-date">Dispatched via Ekart</div>
+            </div>
+            <div class="tracker-step-item completed">
+              <div class="tracker-node">${checkSvg}</div>
+              <div class="tracker-step-title">Out for Delivery</div>
+              <div class="tracker-step-date">Arrived at local hub</div>
+            </div>
+            <div class="tracker-step-item completed">
+              <div class="tracker-node">${checkSvg}</div>
+              <div class="tracker-step-title">Delivered</div>
+              <div class="tracker-step-date" style="color:#16a34a; font-weight:700;">Delivered directly</div>
+            </div>
+          `;
+        } else if (isOFD) {
+          stepsContainer.innerHTML = `
+            <div class="tracker-step-item completed">
+              <div class="tracker-node">${checkSvg}</div>
+              <div class="tracker-step-title">Order Confirmed</div>
+              <div class="tracker-step-date">${order.date}</div>
+            </div>
+            <div class="tracker-step-item completed">
+              <div class="tracker-node">${checkSvg}</div>
+              <div class="tracker-step-title">Shipped</div>
+              <div class="tracker-step-date">In-transit Hub</div>
+            </div>
+            <div class="tracker-step-item active">
+              <div class="tracker-node"><span class="tracker-node-dot"></span></div>
+              <div class="tracker-step-title">Out for Delivery</div>
+              <div class="tracker-step-date" style="color:#16a34a; font-weight:700;">Arriving Today by 7 PM</div>
+            </div>
+            <div class="tracker-step-item">
+              <div class="tracker-node">
+                <svg class="nav-icon-svg" viewBox="0 0 24 24" style="width:14px; height:14px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div class="tracker-step-title">Delivered</div>
+              <div class="tracker-step-date">Expected Today</div>
+            </div>
+          `;
+        } else {
+          stepsContainer.innerHTML = `
+            <div class="tracker-step-item completed">
+              <div class="tracker-node">${checkSvg}</div>
+              <div class="tracker-step-title">Order Confirmed</div>
+              <div class="tracker-step-date">${order.date}</div>
+            </div>
+            <div class="tracker-step-item active">
+              <div class="tracker-node"><span class="tracker-node-dot"></span></div>
+              <div class="tracker-step-title">Shipped</div>
+              <div class="tracker-step-date" style="color:#16a34a; font-weight:700;">Processing with Courier</div>
+            </div>
+            <div class="tracker-step-item">
+              <div class="tracker-node">
+                <svg class="nav-icon-svg" viewBox="0 0 24 24" style="width:14px; height:14px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+              </div>
+              <div class="tracker-step-title">Out for Delivery</div>
+              <div class="tracker-step-date">Expected in 2 days</div>
+            </div>
+            <div class="tracker-step-item">
+              <div class="tracker-node">
+                <svg class="nav-icon-svg" viewBox="0 0 24 24" style="width:14px; height:14px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div class="tracker-step-title">Delivered</div>
+              <div class="tracker-step-date">Expected in 3 days</div>
+            </div>
+          `;
+        }
+      }
+
+      // Configure Activity Logs
+      if (logsContainer) {
+        if (isDelivered) {
+          logsContainer.innerHTML = `
+            <li class="tracker-log-row">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time">Oct 26 &bull; 4:15 PM</span>
+              <span class="tracker-log-desc">Delivered safely at recipient address. OTP signed by recipient.</span>
+            </li>
+            <li class="tracker-log-row">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time">Oct 26 &bull; 9:30 AM</span>
+              <span class="tracker-log-desc">Out for delivery with delivery agent Ramesh Kumar (Ekart Logistics).</span>
+            </li>
+            <li class="tracker-log-row">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time">Oct 25 &bull; 8:10 PM</span>
+              <span class="tracker-log-desc">Arrived at destination delivery sorting facility (Bengaluru South).</span>
+            </li>
+            <li class="tracker-log-row">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time">${order.date}</span>
+              <span class="tracker-log-desc">Order placed &amp; confirmed. Handed over to courier.</span>
+            </li>
+          `;
+        } else if (isOFD) {
+          logsContainer.innerHTML = `
+            <li class="tracker-log-row">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time">Today &bull; 10:15 AM</span>
+              <span class="tracker-log-desc">Out for delivery with courier partner (Ekart Logistics). Executive will arrive before 7:00 PM.</span>
+            </li>
+            <li class="tracker-log-row">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time">Today &bull; 6:40 AM</span>
+              <span class="tracker-log-desc">Parcel reached final delivery hub: Bellandur Logistics Centre.</span>
+            </li>
+            <li class="tracker-log-row">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time">${order.date}</span>
+              <span class="tracker-log-desc">Order verified &amp; dispatched from seller facility.</span>
+            </li>
+          `;
+        } else {
+          logsContainer.innerHTML = `
+            <li class="tracker-log-row">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time">Today &bull; Verified</span>
+              <span class="tracker-log-desc">Order placed &amp; payment confirmed via ${order.paymentMethod || 'UPI'}.</span>
+            </li>
+            <li class="tracker-log-row">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time">In Progress</span>
+              <span class="tracker-log-desc">Seller is processing the shipment packaging at primary warehouse.</span>
+            </li>
+            <li class="tracker-log-row upcoming">
+              <span class="tracker-log-dot"></span>
+              <span class="tracker-log-time">Upcoming</span>
+              <span class="tracker-log-desc">Pickup scheduled by Ekart Logistics for express air shipping.</span>
+            </li>
+          `;
+        }
+      }
+
+      if (modal) modal.classList.add('show');
+
+      // Animate Green Line inside the modal!
+      if (greenLine) {
+        greenLine.style.width = '0%';
+        setTimeout(() => {
+          greenLine.style.width = progressWidth;
+        }, 150);
+      }
+    }
+
+    function closeTrackingModal() {
+      const modal = document.getElementById('tracking-modal');
+      if (modal) modal.classList.remove('show');
+    }
+  </script>
+</body>
+</html>
+
